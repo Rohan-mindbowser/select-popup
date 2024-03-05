@@ -1,10 +1,7 @@
 <!-- app.component.html -->
 
 <div (mouseup)="handleSelection($event)">
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque dapibus, urna in vulputate cursus, libero mi
-    scelerisque ligula, nec ullamcorper est ligula at metus.
-  </p>
+  <ng-content></ng-content>
 </div>
 
 <div #popupElement class="popup">

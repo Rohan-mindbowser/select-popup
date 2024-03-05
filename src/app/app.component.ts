@@ -1,9 +1,11 @@
 // app.component.ts
 
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   HostListener,
+  Input,
   Renderer2,
   ViewChild,
 } from '@angular/core';
@@ -13,12 +15,38 @@ import {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  selectedText: string | null = null;
+export class AppComponent implements AfterViewInit {
   @ViewChild('popupElement') popupElement!: ElementRef;
+  @HostListener('document:click', ['$event'])
+  @Input()
+  width!: string;
+  @Input() height!: string;
+  @Input() bgColor!: string;
+  @Input() fontColor!: string;
+  @Input() fontSize!: string;
+  selectedText: string | null = null;
 
   constructor(private elRef: ElementRef, private renderer: Renderer2) {}
-  @HostListener('document:click', ['$event'])
+
+  ngAfterViewInit(): void {
+    const popup = document.querySelector('.popup') as HTMLElement;
+    if (this.width) {
+      popup.style.width = this.width;
+    }
+    if (this.height) {
+      popup.style.height = this.height;
+    }
+    if (this.bgColor) {
+      popup.style.backgroundColor = this.bgColor;
+    }
+    if (this.fontColor) {
+      popup.style.color = this.fontColor;
+    }
+    if (this.fontSize) {
+      popup.style.fontSize = this.fontSize;
+    }
+  }
+
   handleClickOutside(event: Event): void {
     if (!this.elRef.nativeElement.contains(event.target)) {
       this.hidePopup();
